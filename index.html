@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For the Love We Built | Personalized Keepsake</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            DEFAULT: '#F9F6F0',
+                            dark: '#EFEBE1'
+                        },
+                        charcoal: {
+                            DEFAULT: '#2C2A28',
+                            light: '#4A4846'
+                        },
+                        accent: '#827D73'
+                    },
+                    fontFamily: {
+                        serif: ['Lora', 'serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'soft': '0 20px 40px -15px rgba(0,0,0,0.05)',
+                        'glow': '0 0 40px -10px rgba(130,125,115,0.15)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F9F6F0;
+            color: #2C2A28;
+            -webkit-font-smoothing: antialiased;
+            /* Subtle background texture/gradient */
+            background-image: radial-gradient(circle at 50% 0%, #ffffff 0%, transparent 70%);
+        }
+        
+        /* Interactive Preview Animation */
+        .fade-in {
+            animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Reveal Base Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Delay utilities for staggered animations */
+        .delay-100 { transition-delay: 100ms; }
+        .delay-200 { transition-delay: 200ms; }
+        .delay-300 { transition-delay: 300ms; }
+
+        /* Hide scrollbar for preview */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="font-sans text-charcoal overflow-x-hidden">
+
+    <!-- Mobile Sticky CTA (Hidden on desktop, slides up on load) -->
+    <div class="fixed bottom-0 left-0 right-0 p-4 bg-cream/90 backdrop-blur-md border-t border-cream-dark z-50 md:hidden flex justify-center translate-y-full active:translate-y-0 transition-transform duration-500 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]" id="mobile-cta">
+        <a href="#pricing" class="w-full text-center bg-charcoal text-cream py-3 px-6 rounded-sm text-sm font-medium tracking-wide shadow-lg hover:bg-black transition-colors">
+            Create Your Keepsake
+        </a>
+    </div>
+
+    <!-- Main Content Wrapper -->
+    <main class="max-w-2xl mx-auto px-5 pb-32 md:pb-24">
+
+        <!-- HERO SECTION -->
+        <section class="pt-28 pb-20 text-center reveal active">
+            <div class="inline-block mb-6 px-4 py-1.5 rounded-full border border-cream-dark bg-white/50 shadow-sm">
+                <span class="text-xs uppercase tracking-widest text-accent font-medium">A Meaningful Gift</span>
+            </div>
+            <h1 class="font-serif text-4xl md:text-5xl lg:text-6xl font-medium leading-tight mb-6 text-charcoal">
+                For the Love We Built
+            </h1>
+            <h2 class="text-lg md:text-xl text-charcoal-light mb-8 font-serif italic max-w-lg mx-auto leading-relaxed delay-100 reveal active">
+                A personalized keepsake book for the partner who has been there through the ordinary days, the hard seasons, and everything in between.
+            </h2>
+            <p class="text-base text-charcoal-light leading-relaxed mb-10 max-w-xl mx-auto delay-200 reveal active">
+                Sometimes love runs deep, but the words do not come easily. This keepsake helps you turn years of gratitude, memories, and quiet devotion into a gift your partner can open, read, and keep.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 delay-300 reveal active">
+                <a href="#pricing" class="w-full sm:w-auto bg-charcoal text-cream py-4 px-8 rounded-sm text-sm font-medium tracking-wider uppercase hover:bg-black transition-all duration-300 hover:scale-[1.02] hover:shadow-xl">
+                    Create Your Keepsake
+                </a>
+                <a href="#preview" class="w-full sm:w-auto border border-charcoal text-charcoal py-4 px-8 rounded-sm text-sm font-medium tracking-wider uppercase hover:bg-cream-dark transition-all duration-300">
+                    See What's Inside
+                </a>
+            </div>
+            <p class="text-xs tracking-widest text-accent uppercase delay-300 reveal active">
+                Personalized in minutes. Delivered digitally.
+            </p>
+        </section>
+
+        <hr class="border-t border-cream-dark my-10 reveal">
+
+        <!-- PROBLEM SECTION -->
+        <section class="py-14 reveal">
+            <div class="md:pr-12">
+                <h3 class="font-serif text-2xl md:text-3xl mb-8 text-charcoal font-medium">When a card is not enough</h3>
+                <div class="space-y-6 text-charcoal-light leading-relaxed text-lg">
+                    <p>Long-term love is full of things we rarely say out loud. The routines, the sacrifices, the patience, the emotional weight, the ways your partner kept showing up even when life felt heavy.</p>
+                    <p>You feel it. You notice it. But turning all of that into words that actually land is hard.</p>
+                    <p>A text feels too small. A generic gift feels forgettable. A simple card cannot hold the life you built together.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCT INTRO -->
+        <section class="py-14 reveal">
+            <h3 class="font-serif text-2xl md:text-3xl mb-8 text-charcoal font-medium">A gift that says what everyday life often interrupts</h3>
+            <div class="space-y-6 text-charcoal-light leading-relaxed text-lg">
+                <p>This is a personalized keepsake book created for the partner you love. It is designed to help you express gratitude, tenderness, and the story of what you have built together in a way that feels intimate instead of generic.</p>
+                <p>Each book is personalized with your names and message, then delivered as a private digital reading experience your partner can open on their phone or tablet.</p>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE PREVIEW SECTION -->
+        <section id="preview" class="py-16 reveal">
+            <p class="text-xs tracking-widest text-accent uppercase text-center mb-8">Sneak Peek</p>
+            
+            <!-- Book Preview Container with elevated styling -->
+            <div class="bg-white p-8 md:p-14 shadow-soft hover:shadow-2xl transition-shadow duration-500 border border-cream-dark aspect-[3/4] md:aspect-square flex flex-col justify-center items-center text-center relative rounded-md transform md:-rotate-1 hover:rotate-0">
+                
+                <div id="preview-page" class="fade-in max-w-sm">
+                    <!-- JS injects content here -->
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="absolute bottom-6 left-0 right-0 flex justify-between px-8 md:px-12 items-center">
+                    <button onclick="prevPage()" class="text-accent hover:text-charcoal transition-all duration-200 text-sm uppercase tracking-wider p-2 hover:bg-cream rounded-sm flex items-center gap-2">
+                        <span>&larr;</span> Prev
+                    </button>
+                    <span id="page-indicator" class="text-xs font-medium text-charcoal-light tracking-widest">1 / 4</span>
+                    <button onclick="nextPage()" class="text-accent hover:text-charcoal transition-all duration-200 text-sm uppercase tracking-wider p-2 hover:bg-cream rounded-sm flex items-center gap-2">
+                        Next <span>&rarr;</span>
+                    </button>
+                </div>
+            </div>
+            <p class="text-center text-sm text-accent mt-6 italic font-serif">Swipe or click to read sample pages</p>
+        </section>
+
+        <hr class="border-t border-cream-dark my-10 reveal">
+
+        <!-- WHAT'S INSIDE -->
+        <section class="py-14 reveal">
+            <h3 class="font-serif text-2xl md:text-3xl mb-8 text-charcoal font-medium">What your partner will receive</h3>
+            <ul class="space-y-5 text-charcoal-light leading-relaxed text-lg">
+                <li class="flex items-start bg-white p-4 rounded-sm shadow-sm border border-cream-dark hover:border-accent transition-colors">
+                    <svg class="w-6 h-6 text-accent shrink-0 mr-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                    <span>A complete 32-page personalized keepsake book centered on your relationship.</span>
+                </li>
+                <li class="flex items-start bg-white p-4 rounded-sm shadow-sm border border-cream-dark hover:border-accent transition-colors">
+                    <svg class="w-6 h-6 text-accent shrink-0 mr-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path></svg>
+                    <span>Your names woven seamlessly into the emotional experience.</span>
+                </li>
+                <li class="flex items-start bg-white p-4 rounded-sm shadow-sm border border-cream-dark hover:border-accent transition-colors">
+                    <svg class="w-6 h-6 text-accent shrink-0 mr-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 19v-8.93a2 2 0 01.89-1.664l7-4.666a2 2 0 012.22 0l7 4.666A2 2 0 0121 10.07V19M3 19a2 2 0 002 2h14a2 2 0 002-2M3 19l6.75-4.5M21 19l-6.75-4.5M3 10l6.75 4.5M21 10l-6.75 4.5m0 0l-1.14.76a2 2 0 01-2.22 0l-1.14-.76"></path></svg>
+                    <span>Your personal note included inside on a dedicated page.</span>
+                </li>
+                <li class="flex items-start bg-white p-4 rounded-sm shadow-sm border border-cream-dark hover:border-accent transition-colors">
+                    <svg class="w-6 h-6 text-accent shrink-0 mr-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg>
+                    <span>A private digital link that feels intimate and completely gift-ready.</span>
+                </li>
+            </ul>
+        </section>
+
+        <!-- HOW IT WORKS -->
+        <section class="py-14 reveal">
+            <h3 class="font-serif text-2xl md:text-3xl mb-10 text-charcoal font-medium">How it works</h3>
+            <div class="space-y-8 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent before:via-cream-dark before:to-transparent">
+                
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-cream bg-charcoal text-cream text-sm font-serif shadow-md shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">1</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-5 rounded-sm shadow-sm border border-cream-dark">
+                        <p class="text-charcoal-light">Add your names, photo, and personal details.</p>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-cream bg-white border border-accent text-charcoal text-sm font-serif shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">2</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-5 rounded-sm shadow-sm border border-cream-dark">
+                        <p class="text-charcoal-light">Complete the secure checkout process.</p>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-cream bg-white border border-accent text-charcoal text-sm font-serif shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">3</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-5 rounded-sm shadow-sm border border-cream-dark">
+                        <p class="text-charcoal-light">Your customized keepsake is instantly generated.</p>
+                    </div>
+                </div>
+
+                <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                    <div class="flex items-center justify-center w-10 h-10 rounded-full border-4 border-cream bg-white border border-accent text-charcoal text-sm font-serif shadow-sm shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 transition-transform group-hover:scale-110">4</div>
+                    <div class="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] bg-white p-5 rounded-sm shadow-sm border border-cream-dark">
+                        <p class="text-charcoal-light">Share the private link digitally on your special day.</p>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- WHY IT FEELS DIFFERENT -->
+        <section class="py-14 reveal">
+            <div class="bg-charcoal text-cream p-10 md:p-14 rounded-md text-center shadow-2xl relative overflow-hidden">
+                <!-- Subtle background design inside dark card -->
+                <div class="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-accent rounded-full opacity-10 blur-3xl"></div>
+                <div class="absolute bottom-0 left-0 -mb-10 -ml-10 w-40 h-40 bg-cream rounded-full opacity-5 blur-3xl"></div>
+                
+                <h3 class="font-serif text-2xl md:text-3xl mb-6 font-medium relative z-10">Why this gift feels personal</h3>
+                <div class="space-y-4 text-cream/80 leading-relaxed text-lg relative z-10 max-w-xl mx-auto">
+                    <p>Anyone can buy a last-minute gift. Very few gifts make someone feel truly seen.</p>
+                    <p>This keepsake is different because it is built around your relationship, your words, and the meaning behind the life you share. It does not rely on clichés or generic romance. It helps you say something real.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRICING - SINGLE OFFER -->
+        <section id="pricing" class="py-20 reveal">
+            <h3 class="font-serif text-3xl md:text-4xl mb-12 text-charcoal font-medium text-center">Give the perfect gift</h3>
+            
+            <div class="max-w-md mx-auto">
+                <!-- Single Premium Pricing Card -->
+                <div class="border border-cream-dark bg-white p-8 md:p-10 rounded-md flex flex-col relative shadow-soft hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-1">
+                    
+                    <div class="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-charcoal text-cream text-[11px] uppercase tracking-widest px-5 py-1.5 rounded-full shadow-md whitespace-nowrap">
+                        The Complete Keepsake
+                    </div>
+                    
+                    <h4 class="font-serif text-2xl text-charcoal mb-2 text-center mt-3">Gift Edition</h4>
+                    <p class="text-5xl font-light text-charcoal mb-8 text-center flex justify-center items-start gap-1">
+                        <span class="text-2xl mt-1 text-charcoal-light">$</span>14.99
+                    </p>
+                    
+                    <ul class="space-y-4 text-charcoal-light text-sm mb-10 flex-grow">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-accent shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Private hosted digital flipbook link</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-accent shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Fully personalized copy & custom note</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-accent shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Downloadable high-res Keepsake PDF</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-accent shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                            <span>Printable QR gifting card for presentation</span>
+                        </li>
+                    </ul>
+                    
+                    <button class="w-full bg-charcoal text-cream py-4 px-4 rounded-sm text-sm font-medium tracking-wider uppercase hover:bg-black transition-all duration-300 shadow-md hover:shadow-lg hover:scale-[1.02]">
+                        Create Your Keepsake
+                    </button>
+                    <p class="text-center text-xs text-accent mt-4">One-time payment. Instant delivery.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-14 reveal">
+            <h3 class="font-serif text-2xl md:text-3xl mb-10 text-charcoal font-medium text-center">Questions?</h3>
+            <div class="space-y-6 max-w-xl mx-auto">
+                <div class="bg-white p-6 rounded-sm border border-cream-dark shadow-sm">
+                    <h4 class="font-medium text-charcoal mb-2 font-serif text-lg">Is this a physical book?</h4>
+                    <p class="text-charcoal-light leading-relaxed">No, this is a premium digital keepsake book designed to feel personal, polished, and easy to gift privately via a link or QR code.</p>
+                </div>
+                <div class="bg-white p-6 rounded-sm border border-cream-dark shadow-sm">
+                    <h4 class="font-medium text-charcoal mb-2 font-serif text-lg">How is it personalized?</h4>
+                    <p class="text-charcoal-light leading-relaxed">You simply add your names, a photo, and a custom message. Our system weaves those details seamlessly into the final poetic experience.</p>
+                </div>
+                <div class="bg-white p-6 rounded-sm border border-cream-dark shadow-sm">
+                    <h4 class="font-medium text-charcoal mb-2 font-serif text-lg">How will my partner receive it?</h4>
+                    <p class="text-charcoal-light leading-relaxed">You will get a private digital link to text them, plus a printable presentation card with a QR code if you prefer handing them something in person.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- FINAL CTA -->
+        <section class="py-20 text-center reveal">
+            <h3 class="font-serif text-3xl md:text-4xl lg:text-5xl mb-6 text-charcoal font-medium">Give a gift that means more.</h3>
+            <p class="text-charcoal-light mb-10 max-w-md mx-auto text-lg">
+                Turn what you feel into something they can actually open, read, and remember.
+            </p>
+            <a href="#pricing" class="inline-block bg-charcoal text-cream py-5 px-10 rounded-sm text-sm font-medium tracking-wider uppercase hover:bg-black transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-[1.03]">
+                Create Your Keepsake Now
+            </a>
+        </section>
+
+        <footer class="text-center pt-12 pb-8 border-t border-cream-dark text-xs text-accent reveal">
+            <p>&copy; 2026 For the Love We Built. All rights reserved.</p>
+        </footer>
+
+    </main>
+
+    <!-- Scripts -->
+    <script>
+        // Interactive Preview Logic
+        const pages = [
+            `"<span class='text-sm uppercase tracking-widest text-accent block mb-5'>Page 04</span>
+             <span class='font-serif text-2xl md:text-3xl leading-snug text-charcoal'>Even in the beginning, I knew. You mattered differently than anyone else ever had.</span>"`,
+            
+            `"<span class='text-sm uppercase tracking-widest text-accent block mb-5'>Page 12</span>
+             <span class='font-serif text-2xl md:text-3xl leading-snug text-charcoal'>But we have also had the hard years. The fatigue, the friction, the imperfect seasons. Through the strain, your tenderness survived.</span>"`,
+            
+            `"<span class='text-sm uppercase tracking-widest text-accent block mb-5'>Page 21</span>
+             <span class='font-serif text-2xl md:text-3xl leading-snug text-charcoal'>I want to acknowledge what you carried. The unspoken pressure you quietly absorbed to keep us moving forward.</span>"`,
+            
+            `"<span class='text-sm uppercase tracking-widest text-accent block mb-5'>Page 29</span>
+             <span class='font-serif text-2xl md:text-3xl leading-snug text-charcoal'>Look at what we built. Your fingerprints are on every piece of warmth, beauty, and feeling in our life.</span>"`
+        ];
+
+        let currentPage = 0;
+        const pageElement = document.getElementById('preview-page');
+        const indicatorElement = document.getElementById('page-indicator');
+
+        function updatePage() {
+            pageElement.classList.remove('fade-in');
+            void pageElement.offsetWidth; // Force reflow
+            pageElement.innerHTML = pages[currentPage];
+            pageElement.classList.add('fade-in');
+            indicatorElement.innerText = `${currentPage + 1} / ${pages.length}`;
+        }
+
+        function nextPage() {
+            currentPage = (currentPage + 1) % pages.length;
+            updatePage();
+        }
+
+        function prevPage() {
+            currentPage = (currentPage - 1 + pages.length) % pages.length;
+            updatePage();
+        }
+
+        updatePage();
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    // Optional: stop observing once revealed
+                    // observer.unobserve(entry.target); 
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mobile Sticky CTA Behavior
+        window.addEventListener('scroll', () => {
+            const mobileCta = document.getElementById('mobile-cta');
+            // Show CTA after scrolling down a bit
+            if (window.scrollY > 300) {
+                mobileCta.classList.add('active:translate-y-0');
+                mobileCta.classList.remove('translate-y-full');
+            } else {
+                mobileCta.classList.remove('active:translate-y-0');
+                mobileCta.classList.add('translate-y-full');
+            }
+        });
+    </script>
+</body>
+</html>
