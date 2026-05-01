@@ -278,14 +278,14 @@
             </div>
             <!-- Polar Embedded Checkout -->
             <div class="max-w-lg mx-auto">
-                <div class="bg-white border border-cream-dark rounded-2xl p-4 md:p-6 shadow-soft polar-embed-wrapper" id="polar-checkout-container">
+                <div class="bg-white border border-cream-dark rounded-2xl p-2 shadow-soft polar-embed-wrapper" id="polar-checkout-container">
                     <!-- Wife (husband gifting wife) -->
-                    <div data-for="wife" class="show">
-                        <a href="https://buy.polar.sh/polar_cl_Ob2MEwUQKkheQfh6FFPH5dkWKBojWvbaKS6wy1UaY9T" data-polar-checkout data-polar-checkout-theme="dark">Purchase</a>
+                    <div data-for="wife" class="show w-full">
+                        <iframe src="https://buy.polar.sh/polar_cl_Ob2MEwUQKkheQfh6FFPH5dkWKBojWvbaKS6wy1UaY9T?theme=dark" class="w-full min-h-[600px] border-0 rounded-xl" title="Polar Checkout"></iframe>
                     </div>
                     <!-- Husband (wife gifting husband) -->
-                    <div data-for="husband">
-                        <a href="https://buy.polar.sh/polar_cl_ijRW6aiRUI7A7HzuZwJqgHRRnIvEd8b3T7x9G1eau71" data-polar-checkout data-polar-checkout-theme="dark">Purchase</a>
+                    <div data-for="husband" class="w-full">
+                        <iframe src="https://buy.polar.sh/polar_cl_ijRW6aiRUI7A7HzuZwJqgHRRnIvEd8b3T7x9G1eau71?theme=dark" class="w-full min-h-[600px] border-0 rounded-xl" title="Polar Checkout"></iframe>
                     </div>
                 </div>
             </div>
@@ -309,8 +309,6 @@
         </section>
         <footer class="text-center pt-12 pb-8 border-t border-cream-dark text-xs text-accent reveal"><p>&#169; 2026 For the Love We Built. All rights reserved.</p></footer>
     </main>
-    <!-- Polar SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@0.1/dist/embed.global.js" defer data-auto-init></script>
     <script>
         // ===== INTENT SYSTEM =====
         var CHECKOUT_LINKS = {
