@@ -28,21 +28,59 @@
         @keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
         .shimmer{background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.4) 50%,transparent 100%);background-size:200% 100%;animation:shimmer 3s infinite}
         .glass{background:rgba(255,255,255,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px)}
+        [data-for]{display:none}
+        [data-for].show{display:inline}
+        .intent-card{transition:all .3s ease}
+        .intent-card:hover{transform:translateY(-4px);box-shadow:0 25px 60px -12px rgba(0,0,0,0.12)}
+        #intent-overlay{transition:opacity .5s ease}
+        #intent-overlay.hiding{opacity:0;pointer-events:none}
+        .polar-embed-wrapper iframe{border-radius:12px;min-height:500px}
     </style>
 </head>
 <body class="font-sans text-charcoal overflow-x-hidden">
+
+    <!-- ===== INTENT SELECTOR OVERLAY ===== -->
+    <div id="intent-overlay" class="fixed inset-0 z-[100] flex items-center justify-center p-5" style="background:rgba(250,248,244,0.97);backdrop-filter:blur(20px)">
+        <div class="text-center max-w-xl mx-auto">
+            <p class="text-xs uppercase tracking-[0.25em] text-accent mb-4">Before we begin</p>
+            <h2 class="font-serif text-3xl md:text-4xl font-medium mb-3 text-charcoal">Who is this keepsake for?</h2>
+            <p class="text-charcoal-soft mb-10 text-base">Choose below so we can personalize everything for you.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <button onclick="selectIntent('wife')" class="intent-card bg-white border border-cream-dark rounded-2xl p-8 text-center shadow-card cursor-pointer group">
+                    <div class="text-4xl mb-4">&#x1F49D;</div>
+                    <h3 class="font-serif text-xl font-medium text-charcoal mb-2">For My Wife</h3>
+                    <p class="text-sm text-charcoal-soft italic font-serif">"She has been my anchor through every storm"</p>
+                </button>
+                <button onclick="selectIntent('husband')" class="intent-card bg-white border border-cream-dark rounded-2xl p-8 text-center shadow-card cursor-pointer group">
+                    <div class="text-4xl mb-4">&#x1F49D;</div>
+                    <h3 class="font-serif text-xl font-medium text-charcoal mb-2">For My Husband</h3>
+                    <p class="text-sm text-charcoal-soft italic font-serif">"He has been my rock through every season"</p>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MOBILE STICKY CTA (hidden near pricing) ===== -->
     <div class="fixed bottom-0 left-0 right-0 p-4 glass border-t border-cream-dark z-50 md:hidden flex justify-center translate-y-full transition-transform duration-500 shadow-[0_-10px_40px_rgba(0,0,0,0.05)]" id="mobile-cta">
         <a href="#pricing" class="w-full text-center bg-charcoal text-cream py-3.5 px-6 rounded-lg text-sm font-medium tracking-wide shadow-lg hover:bg-black transition-colors">Create Your Keepsake</a>
     </div>
+
+    <!-- ===== HEADER SWITCH ===== -->
+    <div class="fixed top-0 left-0 right-0 z-50 p-4 flex justify-end">
+        <button onclick="resetIntent()" id="switch-btn" class="hidden text-xs text-accent hover:text-charcoal transition-colors bg-white/80 backdrop-blur-sm border border-cream-dark rounded-full px-4 py-2 shadow-sm">
+            Gifting your <span id="switch-label">wife</span>? <span class="underline ml-1">Switch</span>
+        </button>
+    </div>
+
     <main class="max-w-3xl mx-auto px-5 pb-32 md:pb-24">
         <!-- HERO -->
         <section class="pt-24 pb-16 text-center reveal active">
             <div class="inline-block mb-8 px-5 py-2 rounded-full border border-cream-dark bg-white/60 shadow-sm backdrop-blur-sm">
-                <span class="text-xs uppercase tracking-[0.2em] text-accent font-medium">A Meaningful Gift for Your Partner</span>
+                <span class="text-xs uppercase tracking-[0.2em] text-accent font-medium">A Meaningful Gift for <span data-for="wife" class="show">Your Wife</span><span data-for="husband">Your Husband</span></span>
             </div>
             <h1 class="font-serif text-4xl md:text-5xl lg:text-[3.5rem] font-medium leading-[1.15] mb-6 text-charcoal">For the Love<br class="hidden sm:block"> We Built</h1>
-            <h2 class="text-lg md:text-xl text-charcoal-light mb-8 font-serif italic max-w-lg mx-auto leading-relaxed delay-100 reveal active">A personalized keepsake book for the partner who has been there through the ordinary days, the hard seasons, and everything in between.</h2>
-            <p class="text-base text-charcoal-soft leading-relaxed mb-8 max-w-xl mx-auto delay-200 reveal active">Sometimes love runs deep, but the words do not come easily. This keepsake helps you turn years of gratitude, memories, and quiet devotion into a gift your partner can open, read, and keep.</p>
+            <h2 class="text-lg md:text-xl text-charcoal-light mb-8 font-serif italic max-w-lg mx-auto leading-relaxed delay-100 reveal active">A personalized keepsake book for the <span data-for="wife" class="show">woman</span><span data-for="husband">man</span> who has been there through the ordinary days, the hard seasons, and everything in between.</h2>
+            <p class="text-base text-charcoal-soft leading-relaxed mb-8 max-w-xl mx-auto delay-200 reveal active">Sometimes love runs deep, but the words do not come easily. This keepsake helps you turn years of gratitude, memories, and quiet devotion into a gift <span data-for="wife" class="show">she</span><span data-for="husband">he</span> can open, read, and keep.</p>
             <!-- Trust Signal -->
             <div class="flex items-center justify-center gap-6 mb-8 delay-200 reveal active flex-wrap">
                 <div class="flex items-center gap-2 text-sm text-charcoal-soft"><svg class="w-4 h-4 text-accent-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><span><strong>4.9/5</strong> from 2,400+ couples</span></div>
@@ -61,8 +99,7 @@
         <section class="py-8 reveal">
             <div class="bg-white/70 backdrop-blur-sm border border-cream-dark rounded-2xl p-6 text-center shadow-card">
                 <div class="flex items-center justify-center gap-3 mb-3"><span class="w-2 h-2 bg-green-500 rounded-full pulse-dot"></span><span class="text-sm font-medium text-charcoal">2,400+ keepsakes created this year</span></div>
-                <div class="flex items-center justify-center gap-0.5 mb-4"><svg class="w-4 h-4 text-accent-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4 text-accent-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4 text-accent-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4 text-accent-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg><svg class="w-4 h-4 text-accent-gold" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg></div>
-                <div class="pt-4 border-t border-cream-dark"><p class="text-[10px] uppercase tracking-[0.25em] text-accent mb-3">Loved by couples everywhere</p><div class="flex items-center justify-center gap-6 md:gap-10 opacity-30 flex-wrap"><span class="text-sm font-semibold tracking-wide">BuzzFeed</span><span class="text-sm font-semibold tracking-wide">The Knot</span><span class="text-sm font-semibold tracking-wide">Brides</span><span class="text-sm font-semibold tracking-wide">HuffPost</span></div></div>
+                <div class="flex items-center justify-center gap-0.5"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
             </div>
         </section>
         <div class="w-16 h-px bg-cream-deeper mx-auto my-6"></div>
@@ -70,7 +107,7 @@
         <section class="py-14 reveal">
             <h3 class="font-serif text-2xl md:text-3xl mb-8 text-charcoal font-medium">When a card is not enough</h3>
             <div class="space-y-6 text-charcoal-light leading-relaxed text-lg">
-                <p>Long-term love is full of things we rarely say out loud. The routines, the sacrifices, the patience, the emotional weight, the ways your partner kept showing up even when life felt heavy.</p>
+                <p>Long-term love is full of things we rarely say out loud. The routines, the sacrifices, the patience, the emotional weight, the ways <span data-for="wife" class="show">she</span><span data-for="husband">he</span> kept showing up even when life felt heavy.</p>
                 <p>You feel it. You notice it. But turning all of that into words that actually land is hard.</p>
                 <p>A text feels too small. A generic gift feels forgettable. A simple card cannot hold the life you built together.</p>
             </div>
@@ -79,10 +116,11 @@
         <section class="py-14 reveal">
             <h3 class="font-serif text-2xl md:text-3xl mb-8 text-charcoal font-medium">A gift that says what everyday life often interrupts</h3>
             <div class="space-y-6 text-charcoal-light leading-relaxed text-lg">
-                <p>This is a personalized keepsake book created for the partner you love. It is designed to help you express gratitude, tenderness, and the story of what you have built together in a way that feels intimate instead of generic.</p>
-                <p>Each book is personalized with your names and message, then delivered as a private digital reading experience your partner can open on their phone or tablet.</p>
+                <p>This is a personalized keepsake book created for the <span data-for="wife" class="show">woman</span><span data-for="husband">man</span> you love. It is designed to help you express gratitude, tenderness, and the story of what you have built together in a way that feels intimate instead of generic.</p>
+                <p>Each book is personalized with your names and message, then delivered as a private digital reading experience <span data-for="wife" class="show">she</span><span data-for="husband">he</span> can open on <span data-for="wife" class="show">her</span><span data-for="husband">his</span> phone or tablet.</p>
             </div>
         </section>
+
         <!-- PREVIEW -->
         <section id="preview" class="py-16 reveal">
             <p class="text-xs tracking-[0.25em] text-accent uppercase text-center mb-8">Sneak Peek</p>
@@ -99,7 +137,7 @@
         <div class="w-16 h-px bg-cream-deeper mx-auto my-6"></div>
         <!-- WHAT'S INSIDE -->
         <section class="py-14 reveal">
-            <h3 class="font-serif text-2xl md:text-3xl mb-8 text-charcoal font-medium">What your partner will receive</h3>
+            <h3 class="font-serif text-2xl md:text-3xl mb-8 text-charcoal font-medium">What <span data-for="wife" class="show">she</span><span data-for="husband">he</span> will receive</h3>
             <ul class="space-y-4 text-charcoal-light leading-relaxed text-lg">
                 <li class="flex items-start bg-white p-5 rounded-xl shadow-card border border-cream-dark hover:border-accent/40 transition-all hover:shadow-soft group"><svg class="w-6 h-6 text-accent shrink-0 mr-4 mt-0.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><span>A complete 32-page personalized keepsake book centered on your relationship.</span></li>
                 <li class="flex items-start bg-white p-5 rounded-xl shadow-card border border-cream-dark hover:border-accent/40 transition-all hover:shadow-soft group"><svg class="w-6 h-6 text-accent shrink-0 mr-4 mt-0.5 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/></svg><span>Your names woven seamlessly into the emotional experience.</span></li>
@@ -117,9 +155,6 @@
                 <div class="bg-white p-6 rounded-xl border border-cream-dark shadow-card hover:shadow-soft transition-all group"><div class="w-10 h-10 rounded-full bg-white border-2 border-accent text-charcoal flex items-center justify-center text-sm font-serif mb-4 group-hover:scale-110 transition-transform">4</div><p class="text-charcoal-light">Share the private link digitally on your special day.</p></div>
             </div>
         </section>
-
-
-
         <!-- WHY DIFFERENT -->
         <section class="py-14 reveal">
             <div class="bg-charcoal text-cream p-10 md:p-14 rounded-2xl text-center shadow-premium relative overflow-hidden">
@@ -137,21 +172,54 @@
             <p class="text-xs tracking-[0.25em] text-accent uppercase text-center mb-3">Real Stories</p>
             <h3 class="font-serif text-2xl md:text-3xl mb-10 text-charcoal font-medium text-center">What couples are saying</h3>
             <div class="space-y-5">
-                <div class="bg-white p-6 md:p-8 rounded-2xl border border-cream-dark shadow-card border-l-4 border-l-accent-gold">
-                    <div class="flex items-center gap-0.5 mb-3"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
-                    <p class="text-charcoal-light leading-relaxed mb-4 font-serif italic">"I'm not someone who can write love letters. This said everything I've been feeling for years but could never put into words. She cried. I almost did too."</p>
-                    <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-rose-soft flex items-center justify-center text-sm font-medium text-charcoal">P</div><div><p class="text-sm font-medium text-charcoal">Priya M.</p><p class="text-xs text-accent">Together 8 years</p></div></div>
+                <!-- WIFE testimonials (husband gifting wife) -->
+                <div data-for="wife" class="show space-y-5">
+                    <div class="bg-white p-6 md:p-8 rounded-2xl border border-cream-dark shadow-card border-l-4 border-l-accent-gold">
+                        <div class="flex items-center gap-0.5 mb-3"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+                        <p class="text-charcoal-light leading-relaxed mb-4 font-serif italic">"I'm not great with words. Never have been. But when she read this, she held my hand and said, 'You DO see me.' That was worth more than any gift I've ever bought."</p>
+                        <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-cream-dark flex items-center justify-center text-sm font-medium text-charcoal">R</div><div><p class="text-sm font-medium text-charcoal">Rahul S.</p><p class="text-xs text-accent">Married 11 years</p></div></div>
+                    </div>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl border border-cream-dark shadow-card border-l-4 border-l-accent-gold">
+                        <div class="flex items-center gap-0.5 mb-3"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+                        <p class="text-charcoal-light leading-relaxed mb-4 font-serif italic">"I've given expensive gifts before â€” watches, trips, jewelry. She said this fifteen-dollar book was the most meaningful thing I've ever given her. That says everything."</p>
+                        <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-cream-dark flex items-center justify-center text-sm font-medium text-charcoal">D</div><div><p class="text-sm font-medium text-charcoal">Daniel R.</p><p class="text-xs text-accent">Together 14 years</p></div></div>
+                    </div>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl border border-cream-dark shadow-card border-l-4 border-l-accent-gold">
+                        <div class="flex items-center gap-0.5 mb-3"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+                        <p class="text-charcoal-light leading-relaxed mb-4 font-serif italic">"She started reading it on her phone during dinner and went completely quiet. Then she looked up with tears and whispered, 'How did you know exactly what to say?' I didn't. This book did."</p>
+                        <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-cream-dark flex items-center justify-center text-sm font-medium text-charcoal">A</div><div><p class="text-sm font-medium text-charcoal">Arjun K.</p><p class="text-xs text-accent">Together 6 years</p></div></div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 md:p-8 rounded-2xl border border-cream-dark shadow-card border-l-4 border-l-accent-gold">
-                    <div class="flex items-center gap-0.5 mb-3"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
-                    <p class="text-charcoal-light leading-relaxed mb-4 font-serif italic">"I've given expensive gifts before â€” watches, trips, jewelry. She said this was the most meaningful thing I've ever given her. For fifteen dollars. That says everything."</p>
-                    <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-cream-dark flex items-center justify-center text-sm font-medium text-charcoal">D</div><div><p class="text-sm font-medium text-charcoal">Daniel R.</p><p class="text-xs text-accent">Together 14 years</p></div></div>
+                <!-- HUSBAND testimonials (wife gifting husband) -->
+                <div data-for="husband" class="space-y-5">
+                    <div class="bg-white p-6 md:p-8 rounded-2xl border border-cream-dark shadow-card border-l-4 border-l-accent-gold">
+                        <div class="flex items-center gap-0.5 mb-3"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+                        <p class="text-charcoal-light leading-relaxed mb-4 font-serif italic">"He opened it on his phone during breakfast and went completely quiet. Then he looked at me and said, 'You see all of that?' He never cries â€” but his eyes said everything."</p>
+                        <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-rose-soft flex items-center justify-center text-sm font-medium text-charcoal">S</div><div><p class="text-sm font-medium text-charcoal">Sarah K.</p><p class="text-xs text-accent">Together 5 years</p></div></div>
+                    </div>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl border border-cream-dark shadow-card border-l-4 border-l-accent-gold">
+                        <div class="flex items-center gap-0.5 mb-3"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+                        <p class="text-charcoal-light leading-relaxed mb-4 font-serif italic">"My husband carries so much quietly. I never know how to tell him I notice. This book said it perfectly. He read it three times that night."</p>
+                        <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-rose-soft flex items-center justify-center text-sm font-medium text-charcoal">P</div><div><p class="text-sm font-medium text-charcoal">Priya M.</p><p class="text-xs text-accent">Married 8 years</p></div></div>
+                    </div>
+                    <div class="bg-white p-6 md:p-8 rounded-2xl border border-cream-dark shadow-card border-l-4 border-l-accent-gold">
+                        <div class="flex items-center gap-0.5 mb-3"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
+                        <p class="text-charcoal-light leading-relaxed mb-4 font-serif italic">"He's the kind of man who gives everything and asks for nothing. I wanted him to feel what I feel. When he finished reading, he just held me. No words needed."</p>
+                        <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-rose-soft flex items-center justify-center text-sm font-medium text-charcoal">M</div><div><p class="text-sm font-medium text-charcoal">Meera J.</p><p class="text-xs text-accent">Together 10 years</p></div></div>
+                    </div>
                 </div>
-                <div class="bg-white p-6 md:p-8 rounded-2xl border border-cream-dark shadow-card border-l-4 border-l-accent-gold">
-                    <div class="flex items-center gap-0.5 mb-3"><span class="text-accent-gold">&#9733;&#9733;&#9733;&#9733;&#9733;</span></div>
-                    <p class="text-charcoal-light leading-relaxed mb-4 font-serif italic">"He opened it on his phone during breakfast and went completely quiet. Then he looked at me and said, 'You see all of that?' That moment was worth everything."</p>
-                    <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-full bg-rose-soft flex items-center justify-center text-sm font-medium text-charcoal">S</div><div><p class="text-sm font-medium text-charcoal">Sarah K.</p><p class="text-xs text-accent">Together 5 years</p></div></div>
+            </div>
+        </section>
+        <!-- QR GREETING CARD -->
+        <section class="py-16 reveal">
+            <p class="text-xs tracking-[0.25em] text-accent uppercase text-center mb-3">The Finishing Touch</p>
+            <h3 class="font-serif text-2xl md:text-3xl mb-4 text-charcoal font-medium text-center">Hand <span data-for="wife" class="show">her</span><span data-for="husband">him</span> something beautiful</h3>
+            <p class="text-charcoal-soft text-center max-w-lg mx-auto mb-10 text-base leading-relaxed">Every keepsake comes with a printable greeting card featuring a personal QR code. <span data-for="wife" class="show">She</span><span data-for="husband">He</span> scans it, and the entire book unfolds on <span data-for="wife" class="show">her</span><span data-for="husband">his</span> phone â€” intimate, private, and completely yours.</p>
+            <div class="max-w-md mx-auto">
+                <div class="bg-white p-4 rounded-2xl shadow-premium border border-cream-dark">
+                    <img src="qr-card.png" alt="Printable QR greeting card mockup" class="w-full rounded-xl" loading="lazy">
                 </div>
+                <p class="text-center text-sm text-accent mt-5 italic font-serif">Print it, fold it, place it beside <span data-for="wife" class="show">her</span><span data-for="husband">his</span> morning coffee. Let the card do the rest.</p>
             </div>
         </section>
 
@@ -170,15 +238,16 @@
             <div class="bg-gradient-to-r from-accent-warm/10 via-accent-gold/10 to-accent-warm/10 border border-accent-gold/20 rounded-xl p-4 text-center mb-10">
                 <p class="text-sm font-medium text-charcoal">&#x1F381; Spring Special &#8212; <span class="line-through text-accent">$24.99</span> <strong class="text-accent-warm">$14.99</strong> <span class="text-charcoal-soft">&#183; Ends in</span> <span id="countdown" class="font-mono font-semibold text-accent-warm">72:00:00</span></p>
             </div>
-            <h3 class="font-serif text-3xl md:text-4xl mb-12 text-charcoal font-medium text-center">Give the perfect gift</h3>
+            <h3 class="font-serif text-3xl md:text-4xl mb-12 text-charcoal font-medium text-center">Give <span data-for="wife" class="show">her</span><span data-for="husband">him</span> the perfect gift</h3>
             <div class="max-w-md mx-auto">
-                <div class="border border-cream-dark bg-white p-8 md:p-10 rounded-2xl flex flex-col relative shadow-soft hover:shadow-premium transition-all duration-500 transform hover:-translate-y-1">
+                <div class="border border-cream-dark bg-white p-8 md:p-10 rounded-2xl flex flex-col relative shadow-soft">
                     <div class="absolute -top-3.5 left-1/2 transform -translate-x-1/2 bg-charcoal text-cream text-[11px] uppercase tracking-widest px-5 py-1.5 rounded-full shadow-md whitespace-nowrap">The Complete Keepsake</div>
                     <h4 class="font-serif text-2xl text-charcoal mb-2 text-center mt-3">Gift Edition</h4>
                     <p class="text-5xl font-light text-charcoal mb-2 text-center"><span class="text-2xl text-charcoal-light">$</span>14.99</p>
                     <p class="text-xs text-accent text-center mb-1 line-through">Regular $24.99</p>
                     <p class="text-xs text-center text-accent-warm font-medium mb-6">&#x1F525; 147 keepsakes created in the last 24 hours</p>
-                    <div class="bg-cream/60 rounded-xl p-4 mb-6 border border-cream-dark">
+                    <!-- Value Stack -->
+                    <div class="bg-cream/60 rounded-xl p-4 mb-4 border border-cream-dark">
                         <p class="text-xs uppercase tracking-widest text-accent mb-3 font-medium">Total value: <span class="text-charcoal font-semibold">$75+</span></p>
                         <ul class="space-y-2 text-sm text-charcoal-light">
                             <li class="flex justify-between"><span>32-page personalized keepsake</span><span class="text-accent">$49</span></li>
@@ -188,19 +257,35 @@
                             <li class="flex justify-between"><span>Printable QR gifting card</span><span class="text-accent">$7</span></li>
                         </ul>
                     </div>
-                    <ul class="space-y-3 text-charcoal-light text-sm mb-8">
-                        <li class="flex items-center"><svg class="w-5 h-5 text-green-600 shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Private hosted digital flipbook link</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-green-600 shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Fully personalized copy and custom note</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-green-600 shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Add your voice note</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-green-600 shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Password-protect your keepsake</li>
-                        <li class="flex items-center"><svg class="w-5 h-5 text-green-600 shrink-0 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Printable QR gifting card</li>
-                    </ul>
-                    <button class="w-full bg-charcoal text-cream py-4 rounded-xl text-sm font-medium tracking-wider uppercase hover:bg-black transition-all duration-300 shadow-premium hover:shadow-2xl hover:scale-[1.02] relative overflow-hidden group"><span class="relative z-10">Create Your Keepsake</span><div class="absolute inset-0 shimmer opacity-0 group-hover:opacity-100 transition-opacity"></div></button>
-                    <p class="text-center text-xs text-accent mt-4">One-time payment. Instant delivery.</p>
-                    <div class="flex items-center justify-center gap-4 mt-6 pt-5 border-t border-cream-dark flex-wrap">
+                    <p class="text-center text-xs text-accent">One-time payment. Instant delivery.</p>
+                    <!-- Trust Badges -->
+                    <div class="flex items-center justify-center gap-4 mt-4 pt-4 border-t border-cream-dark flex-wrap">
                         <div class="flex items-center gap-1.5 text-[11px] text-charcoal-soft"><svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>SSL Secure</div>
                         <div class="flex items-center gap-1.5 text-[11px] text-charcoal-soft"><svg class="w-4 h-4 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Instant</div>
                         <div class="flex items-center gap-1.5 text-[11px] text-charcoal-soft"><svg class="w-4 h-4 text-accent-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>Guaranteed</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- INSTRUCTION BOX + POLAR CHECKOUT -->
+        <section class="py-10 reveal" id="checkout-section">
+            <!-- Instruction Box -->
+            <div class="max-w-lg mx-auto mb-8">
+                <div class="bg-white border border-cream-dark rounded-2xl p-6 shadow-card">
+                    <h4 class="font-serif text-lg font-medium text-charcoal mb-3 flex items-center gap-2"><svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg> Before you checkout</h4>
+                    <p class="text-charcoal-light text-sm leading-relaxed" id="instruction-text">Complete the form below to create your personalized keepsake. After payment, you will receive your private link and printable QR card instantly via email.</p>
+                </div>
+            </div>
+            <!-- Polar Embedded Checkout -->
+            <div class="max-w-lg mx-auto">
+                <div class="bg-white border border-cream-dark rounded-2xl p-4 md:p-6 shadow-soft polar-embed-wrapper" id="polar-checkout-container">
+                    <!-- Wife (husband gifting wife) -->
+                    <div data-for="wife" class="show">
+                        <a href="https://buy.polar.sh/polar_cl_Ob2MEwUQKkheQfh6FFPH5dkWKBojWvbaKS6wy1UaY9T" data-polar-checkout data-polar-checkout-theme="dark">Purchase</a>
+                    </div>
+                    <!-- Husband (wife gifting husband) -->
+                    <div data-for="husband">
+                        <a href="https://buy.polar.sh/polar_cl_ijRW6aiRUI7A7HzuZwJqgHRRnIvEd8b3T7x9G1eau71" data-polar-checkout data-polar-checkout-theme="dark">Purchase</a>
                     </div>
                 </div>
             </div>
@@ -211,29 +296,85 @@
             <div class="space-y-4 max-w-xl mx-auto">
                 <div class="bg-white p-6 rounded-xl border border-cream-dark shadow-card"><h4 class="font-medium text-charcoal mb-2 font-serif text-lg">Is this a physical book?</h4><p class="text-charcoal-light leading-relaxed">No, this is a premium digital keepsake book designed to feel personal, polished, and easy to gift privately via a link or QR code.</p></div>
                 <div class="bg-white p-6 rounded-xl border border-cream-dark shadow-card"><h4 class="font-medium text-charcoal mb-2 font-serif text-lg">How is it personalized?</h4><p class="text-charcoal-light leading-relaxed">You simply add your names, a photo, and a custom message. Our system weaves those details seamlessly into the final poetic experience.</p></div>
-                <div class="bg-white p-6 rounded-xl border border-cream-dark shadow-card"><h4 class="font-medium text-charcoal mb-2 font-serif text-lg">How will my partner receive it?</h4><p class="text-charcoal-light leading-relaxed">You will get a private digital link to text them, plus a printable presentation card with a QR code if you prefer handing them something in person.</p></div>
-                <div class="bg-white p-6 rounded-xl border border-cream-dark shadow-card"><h4 class="font-medium text-charcoal mb-2 font-serif text-lg">Can I add a voice note?</h4><p class="text-charcoal-light leading-relaxed">Yes! You can record a personal voice message that your partner can listen to while reading the keepsake.</p></div>
+                <div class="bg-white p-6 rounded-xl border border-cream-dark shadow-card"><h4 class="font-medium text-charcoal mb-2 font-serif text-lg">How will <span data-for="wife" class="show">she</span><span data-for="husband">he</span> receive it?</h4><p class="text-charcoal-light leading-relaxed">You will get a private digital link to text <span data-for="wife" class="show">her</span><span data-for="husband">him</span>, plus a printable presentation card with a QR code if you prefer handing <span data-for="wife" class="show">her</span><span data-for="husband">him</span> something in person.</p></div>
+                <div class="bg-white p-6 rounded-xl border border-cream-dark shadow-card"><h4 class="font-medium text-charcoal mb-2 font-serif text-lg">Can I add a voice note?</h4><p class="text-charcoal-light leading-relaxed">Yes! You can record a personal voice message that <span data-for="wife" class="show">she</span><span data-for="husband">he</span> can listen to while reading the keepsake.</p></div>
             </div>
         </section>
         <!-- FINAL CTA -->
         <section class="py-20 text-center reveal">
             <h3 class="font-serif text-3xl md:text-4xl lg:text-5xl mb-6 text-charcoal font-medium">Give a gift that<br>means more.</h3>
-            <p class="text-charcoal-light mb-10 max-w-md mx-auto text-lg">Turn what you feel into something they can actually open, read, and remember.</p>
+            <p class="text-charcoal-light mb-10 max-w-md mx-auto text-lg">Turn what you feel into something <span data-for="wife" class="show">she</span><span data-for="husband">he</span> can actually open, read, and remember.</p>
             <a href="#pricing" class="inline-block bg-charcoal text-cream py-5 px-12 rounded-xl text-sm font-medium tracking-wider uppercase hover:bg-black transition-all duration-300 shadow-premium hover:shadow-2xl hover:scale-[1.03]">Create Your Keepsake Now</a>
             <p class="text-xs text-accent mt-6">Join 2,400+ couples who chose something meaningful</p>
         </section>
         <footer class="text-center pt-12 pb-8 border-t border-cream-dark text-xs text-accent reveal"><p>&#169; 2026 For the Love We Built. All rights reserved.</p></footer>
     </main>
+    <!-- Polar SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@polar-sh/checkout@0.1/dist/embed.global.js" defer data-auto-init></script>
     <script>
+        // ===== INTENT SYSTEM =====
+        var CHECKOUT_LINKS = {
+            wife: 'https://buy.polar.sh/polar_cl_Ob2MEwUQKkheQfh6FFPH5dkWKBojWvbaKS6wy1UaY9T',
+            husband: 'https://buy.polar.sh/polar_cl_ijRW6aiRUI7A7HzuZwJqgHRRnIvEd8b3T7x9G1eau71'
+        };
+        function selectIntent(type) {
+            localStorage.setItem('keepsake_intent', type);
+            applyIntent(type);
+            var ov = document.getElementById('intent-overlay');
+            ov.classList.add('hiding');
+            setTimeout(function(){ ov.style.display='none'; }, 500);
+        }
+        function resetIntent() {
+            localStorage.removeItem('keepsake_intent');
+            var ov = document.getElementById('intent-overlay');
+            ov.style.display='flex'; ov.classList.remove('hiding');
+        }
+        function applyIntent(type) {
+            var all = document.querySelectorAll('[data-for]');
+            all.forEach(function(el){ el.classList.remove('show'); });
+            var show = document.querySelectorAll('[data-for="'+type+'"]');
+            show.forEach(function(el){ el.classList.add('show'); });
+            var sb = document.getElementById('switch-btn');
+            var sl = document.getElementById('switch-label');
+            if(sb) sb.classList.remove('hidden');
+            if(sl) sl.textContent = type;
+        }
+        // Check saved intent
+        var saved = localStorage.getItem('keepsake_intent');
+        if(saved) {
+            applyIntent(saved);
+            var ov = document.getElementById('intent-overlay');
+            ov.style.display='none';
+        }
+
+        // ===== PREVIEW =====
         var pages=['<span class="text-sm uppercase tracking-widest text-accent block mb-5">Page 04</span><span class="font-serif text-2xl md:text-3xl leading-snug text-charcoal">Even in the beginning, I knew. You mattered differently than anyone else ever had.</span>','<span class="text-sm uppercase tracking-widest text-accent block mb-5">Page 12</span><span class="font-serif text-2xl md:text-3xl leading-snug text-charcoal">But we have also had the hard years. The fatigue, the friction, the imperfect seasons. Through the strain, your tenderness survived.</span>','<span class="text-sm uppercase tracking-widest text-accent block mb-5">Page 21</span><span class="font-serif text-2xl md:text-3xl leading-snug text-charcoal">I want to acknowledge what you carried. The unspoken pressure you quietly absorbed to keep us moving forward.</span>','<span class="text-sm uppercase tracking-widest text-accent block mb-5">Page 29</span><span class="font-serif text-2xl md:text-3xl leading-snug text-charcoal">Look at what we built. Your fingerprints are on every piece of warmth, beauty, and feeling in our life.</span>'];
         var currentPage=0,pageEl=document.getElementById('preview-page'),indEl=document.getElementById('page-indicator');
         function updatePage(){pageEl.classList.remove('fade-in');void pageEl.offsetWidth;pageEl.innerHTML=pages[currentPage];pageEl.classList.add('fade-in');indEl.innerText=(currentPage+1)+' / '+pages.length;}
         function nextPage(){currentPage=(currentPage+1)%pages.length;updatePage();}
         function prevPage(){currentPage=(currentPage-1+pages.length)%pages.length;updatePage();}
         updatePage();
+
+        // ===== SCROLL REVEAL =====
         var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('active');});},{threshold:0.15});
         document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});
-        window.addEventListener('scroll',function(){var m=document.getElementById('mobile-cta');if(window.scrollY>300){m.classList.remove('translate-y-full');}else{m.classList.add('translate-y-full');}});
+
+        // ===== MOBILE CTA (hide near pricing) =====
+        var pricingEl=document.getElementById('pricing');
+        var checkoutEl=document.getElementById('checkout-section');
+        window.addEventListener('scroll',function(){
+            var m=document.getElementById('mobile-cta');
+            if(window.scrollY<300){m.classList.add('translate-y-full');return;}
+            var pr=pricingEl.getBoundingClientRect();
+            var cr=checkoutEl.getBoundingClientRect();
+            if(pr.top<window.innerHeight && cr.bottom>0){
+                m.classList.add('translate-y-full');
+            } else {
+                m.classList.remove('translate-y-full');
+            }
+        });
+
+        // ===== COUNTDOWN =====
         (function(){var end=new Date();end.setDate(end.getDate()+3);end.setHours(23,59,59,0);function tick(){var now=new Date(),diff=Math.max(0,end-now);var h=Math.floor(diff/36e5),m=Math.floor((diff%36e5)/6e4),s=Math.floor((diff%6e4)/1e3);document.getElementById('countdown').textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');if(diff>0)requestAnimationFrame(tick);}tick();})();
     </script>
 </body>
