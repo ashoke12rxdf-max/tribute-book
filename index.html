@@ -67,8 +67,8 @@
 
     <!-- ===== HEADER SWITCH ===== -->
     <div class="fixed top-0 left-0 right-0 z-50 p-4 flex justify-end">
-        <button onclick="resetIntent()" id="switch-btn" class="hidden text-xs text-charcoal-soft hover:text-charcoal transition-colors bg-white/80 backdrop-blur-sm border border-cream-dark rounded-full px-4 py-2 shadow-sm">
-            Viewing: <strong class="capitalize font-serif">For My <span id="switch-label">wife</span></strong> <span class="underline ml-2">Change</span>
+        <button onclick="resetIntent()" id="switch-btn" class="hidden text-xs text-accent hover:text-charcoal transition-colors bg-white/80 backdrop-blur-sm border border-cream-dark rounded-full px-4 py-2 shadow-sm">
+            Gifting your <span id="switch-label">wife</span>? <span class="underline ml-1">Switch</span>
         </button>
     </div>
 
@@ -124,12 +124,16 @@
         <!-- PREVIEW -->
         <section id="preview" class="py-16 reveal">
             <p class="text-xs tracking-[0.25em] text-accent uppercase text-center mb-8">Sneak Peek</p>
-            <div class="bg-white p-8 md:p-14 shadow-premium border border-cream-dark aspect-[3/4] md:aspect-square flex flex-col justify-center items-center text-center relative rounded-2xl transform md:-rotate-1 hover:rotate-0 transition-transform duration-500">
-                <div id="preview-page" class="fade-in max-w-sm"></div>
-                <div class="absolute bottom-6 left-0 right-0 flex justify-between px-8 md:px-12 items-center">
-                    <button onclick="prevPage()" class="text-accent hover:text-charcoal transition-all text-sm uppercase tracking-wider p-2 hover:bg-cream rounded-lg flex items-center gap-2"><span>&#8592;</span> Prev</button>
-                    <span id="page-indicator" class="text-xs font-medium text-charcoal-light tracking-widest">1 / 4</span>
-                    <button onclick="nextPage()" class="text-accent hover:text-charcoal transition-all text-sm uppercase tracking-wider p-2 hover:bg-cream rounded-lg flex items-center gap-2">Next <span>&#8594;</span></button>
+            <div class="relative max-w-4xl mx-auto shadow-premium rounded-xl overflow-hidden transform md:-rotate-1 hover:rotate-0 transition-transform duration-500 border border-cream-dark group">
+                <img id="preview-page" src="spread1.jpg" alt="Keepsake spread" class="w-full h-auto fade-in">
+                <div class="absolute inset-y-0 left-0 flex items-center px-4">
+                    <button onclick="prevPage()" class="w-10 h-10 rounded-full bg-white/80 backdrop-blur shadow-md flex items-center justify-center text-charcoal hover:bg-white transition-all transform -translate-x-2 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100 focus:opacity-100 focus:translate-x-0">&#8592;</button>
+                </div>
+                <div class="absolute inset-y-0 right-0 flex items-center px-4">
+                    <button onclick="nextPage()" class="w-10 h-10 rounded-full bg-white/80 backdrop-blur shadow-md flex items-center justify-center text-charcoal hover:bg-white transition-all transform translate-x-2 opacity-0 md:group-hover:translate-x-0 md:group-hover:opacity-100 focus:opacity-100 focus:translate-x-0">&#8594;</button>
+                </div>
+                <div class="absolute bottom-4 left-0 right-0 flex justify-center">
+                    <span id="page-indicator" class="bg-charcoal/70 text-white text-xs font-medium px-3 py-1 rounded-full backdrop-blur">1 / 4</span>
                 </div>
             </div>
             <p class="text-center text-sm text-accent mt-6 italic font-serif">Swipe or click to read sample pages</p>
@@ -215,9 +219,9 @@
             <p class="text-xs tracking-[0.25em] text-accent uppercase text-center mb-3">The Finishing Touch</p>
             <h3 class="font-serif text-2xl md:text-3xl mb-4 text-charcoal font-medium text-center">Hand <span data-for="wife" class="show">her</span><span data-for="husband">him</span> something beautiful</h3>
             <p class="text-charcoal-soft text-center max-w-lg mx-auto mb-10 text-base leading-relaxed">Every keepsake comes with a printable greeting card featuring a personal QR code. <span data-for="wife" class="show">She</span><span data-for="husband">He</span> scans it, and the entire book unfolds on <span data-for="wife" class="show">her</span><span data-for="husband">his</span> phone â€” intimate, private, and completely yours.</p>
-            <div class="max-w-md mx-auto">
-                <div class="bg-white p-4 rounded-2xl shadow-premium border border-cream-dark">
-                    <img src="qr-card.png" alt="Printable QR greeting card mockup" class="w-full rounded-xl" loading="lazy">
+            <div class="max-w-3xl mx-auto">
+                <div class="bg-white p-2 rounded-2xl shadow-premium border border-cream-dark">
+                    <img src="greeting-card.jpg" alt="Printable QR greeting card mockup" class="w-full rounded-xl" loading="lazy">
                 </div>
                 <p class="text-center text-sm text-accent mt-5 italic font-serif">Print it, fold it, place it beside <span data-for="wife" class="show">her</span><span data-for="husband">his</span> morning coffee. Let the card do the rest.</p>
             </div>
@@ -346,9 +350,9 @@
         }
 
         // ===== PREVIEW =====
-        var pages=['<span class="text-sm uppercase tracking-widest text-accent block mb-5">Page 04</span><span class="font-serif text-2xl md:text-3xl leading-snug text-charcoal">Even in the beginning, I knew. You mattered differently than anyone else ever had.</span>','<span class="text-sm uppercase tracking-widest text-accent block mb-5">Page 12</span><span class="font-serif text-2xl md:text-3xl leading-snug text-charcoal">But we have also had the hard years. The fatigue, the friction, the imperfect seasons. Through the strain, your tenderness survived.</span>','<span class="text-sm uppercase tracking-widest text-accent block mb-5">Page 21</span><span class="font-serif text-2xl md:text-3xl leading-snug text-charcoal">I want to acknowledge what you carried. The unspoken pressure you quietly absorbed to keep us moving forward.</span>','<span class="text-sm uppercase tracking-widest text-accent block mb-5">Page 29</span><span class="font-serif text-2xl md:text-3xl leading-snug text-charcoal">Look at what we built. Your fingerprints are on every piece of warmth, beauty, and feeling in our life.</span>'];
+        var pages=['spread1.jpg','spread2.jpg','spread3.jpg','spread4.jpg'];
         var currentPage=0,pageEl=document.getElementById('preview-page'),indEl=document.getElementById('page-indicator');
-        function updatePage(){pageEl.classList.remove('fade-in');void pageEl.offsetWidth;pageEl.innerHTML=pages[currentPage];pageEl.classList.add('fade-in');indEl.innerText=(currentPage+1)+' / '+pages.length;}
+        function updatePage(){pageEl.classList.remove('fade-in');void pageEl.offsetWidth;pageEl.src=pages[currentPage];pageEl.classList.add('fade-in');indEl.innerText=(currentPage+1)+' / '+pages.length;}
         function nextPage(){currentPage=(currentPage+1)%pages.length;updatePage();}
         function prevPage(){currentPage=(currentPage-1+pages.length)%pages.length;updatePage();}
         updatePage();
